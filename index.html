@@ -18,7 +18,9 @@
 @media (max-width: 800px) { #hero { height: 100svh; } }
 .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease; }
 .slide.active { opacity: 1; }
-.slide img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+.slide img { width: 100%; height: 100%; object-fit: contain; object-position: center center; background: #0d0b0e; }
+/* Dark bg behind images so portrait/square don't show white edges */
+.slide { background: #0d0b0e; }
 .hero-overlay {
   position: absolute; inset: 0; z-index: 2;
   background: linear-gradient(to bottom, transparent 50%, rgba(26,18,24,0.35) 100%);
@@ -237,9 +239,9 @@
     </div>
   </a>
   <ul class="nav-links">
-    <li><a href="about.html">About</a></li>
     <li><a href="index.html" class="active">Portfolio</a></li>
     <li><a href="exhibitions.html">Exhibitions</a></li>
+    <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact Me</a></li>
   </ul>
 </nav>
@@ -259,7 +261,7 @@
   <div class="section-label reveal">Portfolio</div>
   <div class="categories-grid" id="catGrid">
 
-    <a class="cat-tile reveal" href="categories/the-fur-and-the-feathers.html"
+    <a class="cat-tile reveal" href="the-fur-and-the-feathers.html"
        style="--cat-color:#c47a45;">
       <img src="category-covers/the-fur-and-the-feathers.jpg"
            alt="The Fur and the Feathers" loading="lazy"
@@ -272,7 +274,7 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal reveal-d1" href="categories/human-stories.html"
+    <a class="cat-tile reveal reveal-d1" href="human-stories.html"
        style="--cat-color:#9a5e8c;">
       <img src="category-covers/human-stories.jpg"
            alt="Human Stories" loading="lazy"
@@ -285,7 +287,7 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal reveal-d2" href="categories/shared-identities.html"
+    <a class="cat-tile reveal reveal-d2" href="shared-identities.html"
        style="--cat-color:#4a7da8;">
       <img src="category-covers/shared-identities.jpg"
            alt="Shared Identities" loading="lazy"
@@ -298,7 +300,7 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal" href="categories/on-the-move.html"
+    <a class="cat-tile reveal" href="on-the-move.html"
        style="--cat-color:#6b8c4a;">
       <img src="category-covers/on-the-move.jpg"
            alt="On the Move" loading="lazy"
@@ -311,7 +313,7 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal reveal-d1" href="categories/serene-spaces.html"
+    <a class="cat-tile reveal reveal-d1" href="serene-spaces.html"
        style="--cat-color:#5a8a7a;">
       <img src="category-covers/serene-spaces.jpg"
            alt="Serene Spaces" loading="lazy"
@@ -324,7 +326,7 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal reveal-d2" href="categories/bloom.html"
+    <a class="cat-tile reveal reveal-d2" href="bloom.html"
        style="--cat-color:#b85a8a;">
       <img src="category-covers/bloom.jpg"
            alt="Bloom" loading="lazy"
@@ -337,7 +339,7 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal" href="categories/abstract.html"
+    <a class="cat-tile reveal" href="abstract.html"
        style="--cat-color:#7b4aaa;">
       <img src="category-covers/abstract.jpg"
            alt="Abstract" loading="lazy"
@@ -350,7 +352,7 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal reveal-d1" href="categories/hearts.html"
+    <a class="cat-tile reveal reveal-d1" href="hearts.html"
        style="--cat-color:#c04060;">
       <img src="category-covers/hearts.jpg"
            alt="Hearts" loading="lazy"
@@ -363,7 +365,7 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal reveal-d2" href="categories/circles-of-light.html"
+    <a class="cat-tile reveal reveal-d2" href="circles-of-light.html"
        style="--cat-color:#c08a20;">
       <img src="category-covers/circles-of-light.jpg"
            alt="Circles of Light" loading="lazy"

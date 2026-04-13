@@ -84,9 +84,9 @@
     </div>
   </a>
   <ul class="nav-links">
-    <li><a href="../about.html">About</a></li>
     <li><a href="../index.html#portfolio" class="active">Portfolio</a></li>
     <li><a href="../exhibitions.html">Exhibitions</a></li>
+    <li><a href="../about.html">About</a></li>
     <li><a href="../contact.html">Contact Me</a></li>
   </ul>
 </nav>
@@ -156,20 +156,22 @@ var GITHUB_REPO = 'art-portfolio';
 
 // Inject category title into page
 (function() {
+  var SLUG = 'the-fur-and-the-feathers';
+  var DISPLAY = 'The Fur and the Feathers';
   var h = document.getElementById('catHeading');
   var b = document.getElementById('catBreadcrumb');
-  var words = The Fur and the Feathers.split(' ');
+  var words = DISPLAY.split(' ');
   var last = words.pop();
   if (h) h.innerHTML = words.join(' ') + (words.length ? ' ' : '') + '<span>' + last + '</span>';
-  if (b) b.textContent = The Fur and the Feathers;
-  document.title = The Fur and the Feathers + ' | Faina Shpiler';
+  if (b) b.textContent = DISPLAY;
+  document.title = DISPLAY + ' | Faina Shpiler';
 })();
 
 // ── DYNAMIC GALLERY via GitHub Contents API ──
 (function loadGallery() {
   var apiUrl = 'https://api.github.com/repos/' + GITHUB_USER + '/' + GITHUB_REPO
-             + '/contents/images/' + the-fur-and-the-feathers;
-  var rawBase = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO + '/main/images/' + the-fur-and-the-feathers + '/';
+             + '/contents/images/' + SLUG;
+  var rawBase = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO + '/main/images/' + SLUG + '/';
 
   var loadingEl = document.getElementById('galleryLoading');
   var emptyEl   = document.getElementById('galleryEmpty');
