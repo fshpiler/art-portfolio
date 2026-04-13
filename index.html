@@ -239,6 +239,7 @@
   <ul class="nav-links">
     <li><a href="about.html">About</a></li>
     <li><a href="index.html" class="active">Portfolio</a></li>
+    <li><a href="exhibitions.html">Exhibitions</a></li>
     <li><a href="contact.html">Contact Me</a></li>
   </ul>
 </nav>
@@ -378,105 +379,20 @@
   </div>
 </section>
 
-<!-- ABOUT STRIP -->
-<section class="about-strip" id="about">
-  <div class="about-strip-text reveal">
-    <h2>Painting since <span>1995.</span></h2>
-    <p>Faina Shpiler is a multidisciplinary artist based in Foster City, California. Her work explores joy and seriousness, playfulness and vulnerability — through subjects ranging from whimsical animals and intimate portraits to abstract compositions, landscapes, and cultural narratives.</p>
-    <p style="margin-top:14px;">Working primarily in acrylic, she is known for bold underpainting, vivid color relationships, loose brushstrokes, and expressive contrast.</p>
-    <div class="about-strip-links">
-      <a href="about.html" class="about-strip-link">Full Bio →</a>
-      <a href="contact.html" class="about-strip-link">Get in Touch →</a>
-    </div>
-  </div>
-  <div class="about-strip-photo reveal reveal-d2">
-    <img id="aboutImg" src="faina_photo.jpg" alt="Faina Shpiler"
-         onerror="this.style.opacity='0'">
-  </div>
-</section>
 
-<!-- EXHIBITIONS -->
-<section id="shows">
-  <div class="shows-inner">
-    <div class="section-label reveal">Exhibitions</div>
-
-    <div class="show-item reveal reveal-d1">
-      <div class="show-year">2027</div>
-      <div><div class="show-name">Art on Loan</div><div class="show-venue">SB Public Library · San Bruno, CA</div></div>
-      <div class="show-tag">Solo</div>
-    </div>
-    <div class="show-item reveal reveal-d2">
-      <div class="show-year">2026</div>
-      <div><div class="show-name">The Art of Place</div><div class="show-venue">Ingleside Gallery · San Francisco, CA</div></div>
-      <div class="show-tag">Group</div>
-    </div>
-    <div class="show-item reveal reveal-d3">
-      <div class="show-year">2026</div>
-      <div><div class="show-name">Women's View</div><div class="show-venue">Community Center · Belmont, CA</div></div>
-      <div class="show-tag">Group</div>
-    </div>
-    <div class="show-item reveal reveal-d4">
-      <div class="show-year">2026</div>
-      <div><div class="show-name">Ice Out</div><div class="show-venue">Gallery 1202 · Gilroy, CA</div></div>
-      <div class="show-tag">Group</div>
-    </div>
-    <div class="show-item reveal reveal-d5">
-      <div class="show-year">2026</div>
-      <div><div class="show-name">The Meaning of Home</div><div class="show-venue">Chan Zuckerberg Initiative Community Space · Redwood City, CA</div></div>
-      <div class="show-tag">Group</div>
-    </div>
-    <div class="show-item reveal reveal-d1">
-      <div class="show-year">2026</div>
-      <div><div class="show-name">Spring Exhibit</div><div class="show-venue">Philz Coffee · Chase Center, San Francisco, CA</div></div>
-      <div class="show-tag">Group</div>
-    </div>
-    <div class="show-item reveal reveal-d2">
-      <div class="show-year">2026</div>
-      <div><div class="show-name">Winter Exhibit</div><div class="show-venue">Philz Coffee · Noe Valley, San Francisco, CA</div></div>
-      <div class="show-tag">Group</div>
-    </div>
-    <div class="show-item reveal reveal-d3">
-      <div class="show-year">2025</div>
-      <div><div class="show-name">PJCC Group Exhibition</div><div class="show-venue">Foster City, CA</div></div>
-      <div class="show-tag">Group</div>
-    </div>
-
-  </div>
-</section>
-
-<!-- CONNECT -->
-<section id="connect">
-  <div class="connect-inner">
-    <div class="section-label reveal">Connect</div>
-    <h2 class="reveal reveal-d1">Let's make <span>something</span> together.</h2>
-    <p class="reveal reveal-d2">Whether you're interested in purchasing an existing work, commissioning a custom piece, or just want to say hello, I'd love to hear from you.</p>
-    <form class="connect-form reveal reveal-d3" id="contactForm">
-      <div class="form-row">
-        <div class="field">
-          <input type="text" id="fname" placeholder="Name" required>
-          <label for="fname">Your Name</label>
-        </div>
-        <div class="field">
-          <input type="email" id="femail" placeholder="Email" required>
-          <label for="femail">Email Address</label>
-        </div>
-      </div>
-      <div class="field full">
-        <select id="fsubject">
-          <option value="" disabled selected></option>
-          <option>Commission a painting</option>
-          <option>Purchase existing work</option>
-          <option>Exhibition / collaboration</option>
-          <option>Just saying hello</option>
-        </select>
-        <label for="fsubject">I'm interested in…</label>
-      </div>
-      <div class="field full">
-        <textarea id="fmessage" placeholder="Message" rows="4"></textarea>
-        <label for="fmessage">Your Message</label>
-      </div>
-      <button type="submit" class="btn-send"><span>Send Message</span></button>
-    </form>
+<!-- CONTACT CTA -->
+<section id="connect" style="padding:72px 48px; background:#f3eff5; text-align:center;">
+  <div style="max-width:600px; margin:0 auto;">
+    <h2 class="reveal" style="font-size:clamp(28px,4vw,52px); font-weight:300; line-height:1.1; margin-bottom:16px;">
+      Let's make <span style="color:var(--accent); font-weight:700;">something</span> together.
+    </h2>
+    <p class="reveal reveal-d1" style="font-size:15px; line-height:1.7; color:var(--muted); margin-bottom:36px;">
+      Interested in a commission, purchasing an existing work, or just want to say hello?
+    </p>
+    <a href="contact.html" class="reveal reveal-d2"
+       style="display:inline-block; padding:16px 48px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; font-size:11px; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; text-decoration:none; transition:transform 0.2s, box-shadow 0.2s; box-shadow:0 4px 18px rgba(139,47,201,0.35);">
+      Get in Touch →
+    </a>
   </div>
 </section>
 
@@ -514,7 +430,8 @@
 // These are defined here and loaded from the /images/ folders.
 
 var GITHUB_USER = 'fshpiler';
-var GITHUB_REPO = 'fainashpiler.github.io';
+var GITHUB_REPO = 'art-portfolio';
+var RAW_BASE = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO + '/main/';
 
 // Curated hero images from the existing artwork list (filenames you already have)
 // Place these inside any of your category folders; hero picks from all of them.
@@ -592,8 +509,8 @@ var imageCategory = {
 
 function heroSrc(filename) {
   var cat = imageCategory[filename];
-  if (cat) return '../images/' + cat + '/' + filename;
-  return 'images/' + filename; // fallback: root images folder
+  if (cat) return RAW_BASE + 'images/' + cat + '/' + filename;
+  return RAW_BASE + 'images/' + filename; // fallback
 }
 
 (function initHero() {

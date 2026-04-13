@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exhibitions | Faina Shpiler</title>
+<meta name="description" content="Exhibition history — Faina Shpiler, The Rainbow Canvas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+
+.page-hero {
+  padding: 140px 48px 56px;
+  background: var(--ink);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+@media (max-width: 800px) { .page-hero { padding: 120px 24px 40px; } }
+
+.breadcrumb {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(255,255,255,0.3);
+  margin-bottom: 16px;
+}
+.breadcrumb a { color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+.breadcrumb a:hover { color: var(--accent2); }
+
+.page-hero h1 {
+  font-size: clamp(48px, 8vw, 100px); font-weight: 900; line-height: 0.9;
+  letter-spacing: -0.01em; text-transform: uppercase; color: white;
+}
+.page-hero h1 span { color: var(--accent2); }
+.page-hero-sub {
+  margin-top: 16px; font-size: 14px; font-weight: 300;
+  color: rgba(255,255,255,0.4); letter-spacing: 0.06em;
+}
+
+/* ── SHOWS ── */
+.shows-wrap {
+  background: var(--bg);
+  padding: 72px 48px 100px;
+}
+@media (max-width: 800px) { .shows-wrap { padding: 48px 24px 80px; } }
+
+.shows-inner { max-width: 900px; margin: 0 auto; }
+
+.year-group { margin-bottom: 60px; }
+.year-heading {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--muted); border-bottom: 1px solid var(--line);
+  padding-bottom: 12px; margin-bottom: 0;
+}
+
+.show-item {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 16px 40px; align-items: start;
+  padding: 28px 0; border-bottom: 1px solid var(--line);
+}
+.show-item:last-child { border-bottom: none; }
+@media (max-width: 600px) { .show-item { grid-template-columns: 1fr; gap: 10px; } }
+
+.show-name {
+  font-size: clamp(17px, 2.5vw, 22px); font-weight: 500; line-height: 1.3;
+  color: var(--ink); margin-bottom: 6px;
+}
+.show-venue {
+  font-size: 12px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;
+}
+.show-tag {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent2); border: 1px solid rgba(212,64,138,0.4);
+  padding: 4px 12px; align-self: start; white-space: nowrap; margin-top: 4px;
+}
+@media (max-width: 600px) { .show-tag { align-self: auto; width: fit-content; } }
+
+/* ── UPCOMING BADGE ── */
+.show-tag.upcoming {
+  background: var(--accent2); color: white; border-color: var(--accent2);
+}
+
+/* ── CTA ── */
+.shows-cta {
+  margin-top: 72px; padding: 52px; background: #f3eff5; text-align: center;
+}
+.shows-cta h2 {
+  font-size: clamp(24px, 3.5vw, 44px); font-weight: 300; color: var(--ink);
+  line-height: 1.2; margin-bottom: 12px;
+}
+.shows-cta h2 span { color: var(--accent); font-weight: 700; }
+.shows-cta p { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+.cta-btn {
+  display: inline-block; padding: 16px 48px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white; font-size: 11px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 18px rgba(139,47,201,0.35);
+}
+.cta-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(139,47,201,0.5); }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <a class="logo-wrap" href="index.html">
+    <div class="logo-name-row">
+      <span class="logo-first">FAINA&nbsp;</span><span class="logo-last">SHPILER</span>
+    </div>
+    <div class="logo-stripes">
+      <span style="background:#e63946"></span>
+      <span style="background:#e07800"></span>
+      <span style="background:#b8a000"></span>
+      <span style="background:#2d9e2d"></span>
+      <span style="background:#1a6fbd"></span>
+      <span style="background:#7b2fbe"></span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="index.html#portfolio">Portfolio</a></li>
+    <li><a href="exhibitions.html" class="active">Exhibitions</a></li>
+    <li><a href="contact.html">Contact Me</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO (dark) -->
+<div class="page-hero">
+  <div class="breadcrumb"><a href="index.html">Home</a> → Exhibitions</div>
+  <h1>Exhibi<span>tions.</span></h1>
+  <div class="page-hero-sub">Selected solo &amp; group shows</div>
+</div>
+
+<!-- SHOWS -->
+<div class="shows-wrap">
+  <div class="shows-inner">
+
+    <!-- 2027 -->
+    <div class="year-group reveal">
+      <div class="year-heading">2027</div>
+
+      <div class="show-item">
+        <div>
+          <div class="show-name">Art on Loan</div>
+          <div class="show-venue">SB Public Library · San Bruno, CA</div>
+        </div>
+        <div class="show-tag upcoming">Solo · Upcoming</div>
+      </div>
+    </div>
+
+    <!-- 2026 -->
+    <div class="year-group reveal reveal-d1">
+      <div class="year-heading">2026</div>
+
+      <div class="show-item">
+        <div>
+          <div class="show-name">The Art of Place</div>
+          <div class="show-venue">Ingleside Gallery · San Francisco, CA</div>
+        </div>
+        <div class="show-tag">Group</div>
+      </div>
+
+      <div class="show-item">
+        <div>
+          <div class="show-name">Women's View</div>
+          <div class="show-venue">Community Center · Belmont, CA</div>
+        </div>
+        <div class="show-tag">Group</div>
+      </div>
+
+      <div class="show-item">
+        <div>
+          <div class="show-name">Ice Out</div>
+          <div class="show-venue">Gallery 1202 · Gilroy, CA</div>
+        </div>
+        <div class="show-tag">Group</div>
+      </div>
+
+      <div class="show-item">
+        <div>
+          <div class="show-name">The Meaning of Home</div>
+          <div class="show-venue">Chan Zuckerberg Initiative Community Space · Redwood City, CA</div>
+        </div>
+        <div class="show-tag">Group</div>
+      </div>
+
+      <div class="show-item">
+        <div>
+          <div class="show-name">Spring Exhibit</div>
+          <div class="show-venue">Philz Coffee · Chase Center, San Francisco, CA</div>
+        </div>
+        <div class="show-tag">Group</div>
+      </div>
+
+      <div class="show-item">
+        <div>
+          <div class="show-name">Winter Exhibit</div>
+          <div class="show-venue">Philz Coffee · Noe Valley, San Francisco, CA</div>
+        </div>
+        <div class="show-tag">Group</div>
+      </div>
+
+      <div class="show-item">
+        <div>
+          <div class="show-name">Winter Exhibit</div>
+          <div class="show-venue">Philz Coffee · San Mateo, CA</div>
+        </div>
+        <div class="show-tag">Group</div>
+      </div>
+    </div>
+
+    <!-- 2025 -->
+    <div class="year-group reveal reveal-d2">
+      <div class="year-heading">2025</div>
+
+      <div class="show-item">
+        <div>
+          <div class="show-name">PJCC Group Exhibition</div>
+          <div class="show-venue">Peninsula Jewish Community Center · Foster City, CA</div>
+        </div>
+        <div class="show-tag">Group</div>
+      </div>
+
+      <div class="show-item">
+        <div>
+          <div class="show-name">Summer Exhibit</div>
+          <div class="show-venue">Philz Coffee · San Mateo, CA</div>
+        </div>
+        <div class="show-tag">Group</div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="shows-cta reveal">
+      <h2>Interested in <span>showing together?</span></h2>
+      <p>Open to group shows, collaborations, and gallery inquiries.</p>
+      <a href="contact.html" class="cta-btn">Get in Touch →</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div><span class="footer-name-first">FAINA&nbsp;</span><span class="footer-name-last">SHPILER</span></div>
+  <div class="footer-stripes">
+    <span style="background:#e63946"></span><span style="background:#e07800"></span>
+    <span style="background:#b8a000"></span><span style="background:#2d9e2d"></span>
+    <span style="background:#1a6fbd"></span><span style="background:#7b2fbe"></span>
+  </div>
+  <div class="footer-sub">The Rainbow Canvas</div>
+  <div class="footer-icons">
+    <a href="https://www.instagram.com/the_rainbow_canvas/" target="_blank" class="insta" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </a>
+    <a href="#" data-email class="email" aria-label="Email">
+      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/faina" target="_blank" class="li" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+  </div>
+  <div class="footer-copy">© 2026 Faina Shpiler. All rights reserved.</div>
+</footer>
+
+<script src="shared.js"></script>
+</body>
+</html>
