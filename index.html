@@ -13,14 +13,12 @@
 
 /* ── HERO SLIDESHOW ── */
 #hero {
-  position: relative; height: 100vh; overflow: hidden;
+  position: relative; height: 78vh; overflow: hidden;
 }
-@media (max-width: 800px) { #hero { height: 100svh; } }
+@media (max-width: 800px) { #hero { height: 65vh; } }
 .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease; }
 .slide.active { opacity: 1; }
-.slide img { width: 100%; height: 100%; object-fit: contain; object-position: center center; background: #0d0b0e; }
-/* Dark bg behind images so portrait/square don't show white edges */
-.slide { background: #0d0b0e; }
+.slide img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 .hero-overlay {
   position: absolute; inset: 0; z-index: 2;
   background: linear-gradient(to bottom, transparent 50%, rgba(26,18,24,0.35) 100%);
@@ -65,7 +63,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 2px;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   background: var(--cat-color, #ccc);
   cursor: pointer;
   transition: box-shadow 0.35s;
@@ -261,11 +259,11 @@
   <div class="section-label reveal">Portfolio</div>
   <div class="categories-grid" id="catGrid">
 
-    <a class="cat-tile reveal" href="the-fur-and-the-feathers.html"
+    <a class="cat-tile reveal" href="categories/the-fur-and-the-feathers.html"
        style="--cat-color:#c47a45;">
-      <img src="category-covers/the-fur-and-the-feathers.jpg"
+      <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/the-fur-and-the-feathers/the_lady_the_bug.jpg"
            alt="The Fur and the Feathers" loading="lazy"
-           onerror="this.style.display='none'">
+           onerror="this.style.display='none'" style="object-position: center center;">
       <div class="cat-tile-placeholder">🐾</div>
       <div class="cat-tile-scrim"></div>
       <div class="cat-tile-label">
@@ -274,11 +272,11 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal reveal-d1" href="human-stories.html"
+    <a class="cat-tile reveal reveal-d1" href="categories/human-stories.html"
        style="--cat-color:#9a5e8c;">
-      <img src="category-covers/human-stories.jpg"
+      <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/human-stories/superheroes.jpg"
            alt="Human Stories" loading="lazy"
-           onerror="this.style.display='none'">
+           onerror="this.style.display='none'" style="object-position: center center;">
       <div class="cat-tile-placeholder">👤</div>
       <div class="cat-tile-scrim"></div>
       <div class="cat-tile-label">
@@ -287,11 +285,11 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal reveal-d2" href="shared-identities.html"
+    <a class="cat-tile reveal reveal-d2" href="categories/shared-identities.html"
        style="--cat-color:#4a7da8;">
-      <img src="category-covers/shared-identities.jpg"
+      <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/shared-identities/pride.jpg"
            alt="Shared Identities" loading="lazy"
-           onerror="this.style.display='none'">
+           onerror="this.style.display='none'" style="object-position: center center;">
       <div class="cat-tile-placeholder">🌍</div>
       <div class="cat-tile-scrim"></div>
       <div class="cat-tile-label">
@@ -300,11 +298,11 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal" href="on-the-move.html"
+    <a class="cat-tile reveal" href="categories/on-the-move.html"
        style="--cat-color:#6b8c4a;">
-      <img src="category-covers/on-the-move.jpg"
+      <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/on-the-move/bike.jpg"
            alt="On the Move" loading="lazy"
-           onerror="this.style.display='none'">
+           onerror="this.style.display='none'" style="object-position: center top;">
       <div class="cat-tile-placeholder">🚂</div>
       <div class="cat-tile-scrim"></div>
       <div class="cat-tile-label">
@@ -313,11 +311,11 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal reveal-d1" href="serene-spaces.html"
+    <a class="cat-tile reveal reveal-d1" href="categories/serene-spaces.html"
        style="--cat-color:#5a8a7a;">
-      <img src="category-covers/serene-spaces.jpg"
+      <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/serene-spaces/riverside_glow.jpg"
            alt="Serene Spaces" loading="lazy"
-           onerror="this.style.display='none'">
+           onerror="this.style.display='none'" style="object-position: center top;">
       <div class="cat-tile-placeholder">🌊</div>
       <div class="cat-tile-scrim"></div>
       <div class="cat-tile-label">
@@ -326,11 +324,11 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal reveal-d2" href="bloom.html"
+    <a class="cat-tile reveal reveal-d2" href="categories/bloom.html"
        style="--cat-color:#b85a8a;">
-      <img src="category-covers/bloom.jpg"
+      <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/bloom/sunshine.jpg"
            alt="Bloom" loading="lazy"
-           onerror="this.style.display='none'">
+           onerror="this.style.display='none'" style="object-position: center center;">
       <div class="cat-tile-placeholder">🌸</div>
       <div class="cat-tile-scrim"></div>
       <div class="cat-tile-label">
@@ -339,11 +337,11 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal" href="abstract.html"
+    <a class="cat-tile reveal" href="categories/abstract.html"
        style="--cat-color:#7b4aaa;">
-      <img src="category-covers/abstract.jpg"
+      <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/abstract/undoing.jpg"
            alt="Abstract" loading="lazy"
-           onerror="this.style.display='none'">
+           onerror="this.style.display='none'" style="object-position: center top;">
       <div class="cat-tile-placeholder">🎨</div>
       <div class="cat-tile-scrim"></div>
       <div class="cat-tile-label">
@@ -352,11 +350,11 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal reveal-d1" href="hearts.html"
+    <a class="cat-tile reveal reveal-d1" href="categories/hearts.html"
        style="--cat-color:#c04060;">
-      <img src="category-covers/hearts.jpg"
+      <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/hearts/rainbow_heart.jpg"
            alt="Hearts" loading="lazy"
-           onerror="this.style.display='none'">
+           onerror="this.style.display='none'" style="object-position: center center;">
       <div class="cat-tile-placeholder">❤️</div>
       <div class="cat-tile-scrim"></div>
       <div class="cat-tile-label">
@@ -365,11 +363,11 @@
       </div>
     </a>
 
-    <a class="cat-tile reveal reveal-d2" href="circles-of-light.html"
+    <a class="cat-tile reveal reveal-d2" href="categories/circles-of-light.html"
        style="--cat-color:#c08a20;">
-      <img src="category-covers/circles-of-light.jpg"
+      <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/circles-of-light/twilight.jpg"
            alt="Circles of Light" loading="lazy"
-           onerror="this.style.display='none'">
+           onerror="this.style.display='none'" style="object-position: center top;">
       <div class="cat-tile-placeholder">✨</div>
       <div class="cat-tile-scrim"></div>
       <div class="cat-tile-label">

@@ -188,7 +188,7 @@ var GITHUB_REPO = 'art-portfolio';
       var images = files.filter(function(f) {
         return /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name);
       }).sort(function(a, b) {
-        return a.name.localeCompare(b.name);
+        return b.name.localeCompare(a.name);  // newest-named files first
       });
 
       if (loadingEl) loadingEl.style.display = 'none';
