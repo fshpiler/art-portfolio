@@ -202,7 +202,7 @@ var GITHUB_REPO = 'art-portfolio';
         item.className = 'masonry-item';
         var img = document.createElement('img');
         img.alt = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
-        img.loading = i < 6 ? 'eager' : 'lazy';
+        img.loading = 'eager';
         var ov = document.createElement('div');
         ov.className = 'item-overlay';
         item.appendChild(img);
