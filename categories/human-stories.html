@@ -205,28 +205,44 @@ var GITHUB_REPO = 'art-portfolio';
       images.forEach(function(file, i) {
         var item = document.createElement('div');
         item.className = 'masonry-item';
+
         var img = document.createElement('img');
         img.alt = prettyName(file.name);
         img.loading = i < 6 ? 'eager' : 'lazy';
 
-        img.addEventListener('load', function() {
-          var ratio = img.naturalHeight / (img.naturalWidth || 1);
-          var shortestCol = 0;
-          for (var c = 1; c < numCols; c++) {
-            if (colHeights[c] < colHeights[shortestCol]) shortestCol = c;
-          }
-          cols[shortestCol].appendChild(item);
-          colHeights[shortestCol] += ratio;
-        });
-
-        item.appendChild(img);
         var ov = document.createElement('div');
         ov.className = 'item-overlay';
+
+        item.appendChild(img);
         item.appendChild(ov);
 
-        (function(idx) {
-          item.addEventListener('click', function() { window.openLightbox(idx); });
-        })(i);
+        (function(idx, el, imgEl) {
+          // Set src BEFORE attaching onload to avoid missing cached-image events
+          imgEl.src = rawBase + file.name;
+
+          function placeItem() {
+            var ratio = imgEl.naturalHeight / (imgEl.naturalWidth || 1);
+            var shortestCol = 0;
+            for (var c = 1; c < numCols; c++) {
+              if (colHeights[c] < colHeights[shortestCol]) shortestCol = c;
+            }
+            cols[shortestCol].appendChild(el);
+            colHeights[shortestCol] += ratio;
+          }
+
+          if (imgEl.complete && imgEl.naturalWidth > 0) {
+            // Already cached — place immediately
+            placeItem();
+          } else {
+            imgEl.onload = placeItem;
+            imgEl.onerror = function() {
+              // Still place the item so broken images don't block the grid
+              placeItem();
+            };
+          }
+
+          el.addEventListener('click', function() { window.openLightbox(idx); });
+        })(i, item, img);
 
         item.addEventListener('mouseenter', function() {
           var cr = document.getElementById('cursor');
@@ -240,8 +256,6 @@ var GITHUB_REPO = 'art-portfolio';
           if (cr) { cr.style.width = '8px'; cr.style.height = '8px'; }
           if (ri) { ri.style.width = '36px'; ri.style.height = '36px'; ri.style.borderColor = '#8b2fc9'; }
         });
-
-        img.src = rawBase + file.name;
       });
     })
     .catch(function(err) {
