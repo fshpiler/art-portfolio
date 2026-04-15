@@ -155,7 +155,7 @@ var GITHUB_REPO = 'art-portfolio';
 
 (function loadGallery() {
   var apiUrl = 'https://api.github.com/repos/' + GITHUB_USER + '/' + GITHUB_REPO
-             + '/contents/images/' + SLUG;
+             + '/contents/images/' + SLUG + '?per_page=100';
   var rawBase = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO
               + '/main/images/' + SLUG + '/';
 
