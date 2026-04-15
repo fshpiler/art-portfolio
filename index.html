@@ -11,14 +11,17 @@
 <link rel="stylesheet" href="style.css">
 <style>
 
-/* ── HERO SLIDESHOW ── */
+/* ── HERO VIDEO ── */
 #hero {
   position: relative; height: 78vh; overflow: hidden;
 }
 @media (max-width: 800px) { #hero { height: 65vh; } }
-.slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease; }
-.slide.active { opacity: 1; }
-.slide img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+#heroVideo {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+}
 .hero-overlay {
   position: absolute; inset: 0; z-index: 2;
   background: linear-gradient(to bottom, transparent 50%, rgba(26,18,24,0.35) 100%);
@@ -244,13 +247,15 @@
   </ul>
 </nav>
 
-<!-- HERO SLIDESHOW -->
+<!-- HERO VIDEO -->
 <section id="hero">
-  <div id="slideContainer"></div>
+  <video id="heroVideo" autoplay muted loop playsinline>
+    <source src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/fainahero.mp4" type="video/mp4">
+  </video>
   <div class="hero-overlay"></div>
   <div class="hero-caption">
     <div class="hero-caption-eyebrow">The Rainbow Canvas</div>
-    <div class="hero-caption-title" id="heroTitle"></div>
+    <div class="hero-caption-title">Faina Shpiler</div>
   </div>
 </section>
 
@@ -341,11 +346,24 @@
        style="--cat-color:#7b4aaa;">
       <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/abstract/undoing.jpg"
            alt="Abstract" loading="lazy"
-           onerror="this.style.display='none'" style="object-position: center top;">
+           onerror="this.style.display='none'" style="object-position: center center; transform: scale(1.18); transform-origin: center center;">
       <div class="cat-tile-placeholder">🎨</div>
       <div class="cat-tile-scrim"></div>
       <div class="cat-tile-label">
         <div class="cat-tile-name">Abstract</div>
+        <span class="cat-tile-arrow">View Series →</span>
+      </div>
+    </a>
+
+    <a class="cat-tile reveal reveal-d1" href="categories/hearts.html"
+       style="--cat-color:#c03060;">
+      <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/hearts/rainbow_heart.jpg"
+           alt="Hearts" loading="lazy"
+           onerror="this.style.display='none'" style="object-position: center center;">
+      <div class="cat-tile-placeholder">❤️</div>
+      <div class="cat-tile-scrim"></div>
+      <div class="cat-tile-label">
+        <div class="cat-tile-name">Hearts</div>
         <span class="cat-tile-arrow">View Series →</span>
       </div>
     </a>
@@ -411,141 +429,11 @@
 </footer>
 
 <script>
-// ── HERO SLIDESHOW (uses images from all categories via GitHub API) ──
-// We pull a sampling of images from across all categories for the hero.
-// These are defined here and loaded from the /images/ folders.
-
-var GITHUB_USER = 'fshpiler';
-var GITHUB_REPO = 'art-portfolio';
-var RAW_BASE = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO + '/main/';
-
-// Curated hero images from the existing artwork list (filenames you already have)
-// Place these inside any of your category folders; hero picks from all of them.
-// When you add new images, you can add their paths here too, or we auto-pick.
-var heroImages = [
-  'a_purrrfect_evening.jpg','bear_with_a_view.jpg','bike.jpg',
-  'bring_them_home.jpg','beach_vibes_in_october.jpg','ethan.jpg',
-  'fear.jpg','full_heart.jpg','gone_too_soon.jpg','heart_to_heart.jpg',
-  'journey_home.jpg','keep_me_safe.jpg','lake_mom.jpg',
-  'love_birds.jpg','meadow.jpg','mia.jpg','mom.jpg',
-  'monarch_dreamscape.jpg','nick.jpg','one_way_home.jpg',
-  'ozzie_with_a_tennis_ball.jpg','pardon_the_intrusion.jpg',
-  'pride.jpg','quietude.jpg','rainbow_heart.jpg','riverside_glow.jpg',
-  'santa_cruz_beach.jpg','see_you_in_paradise.jpg','self_portrait.jpg',
-  'sibling_love.jpg','snow_fun.jpg','splash_of_freedom.jpg',
-  'sunflower.jpg','sunny_side_up.jpg','sunshine.jpg',
-  'the_golden_hour_at_the_lake.jpg','the_guiding_light_of_the_trains.jpg',
-  'the_keeper_of_secrets.jpg','the_welcome_committee.jpg',
-  'tulips.jpg','twilight.jpg','unbreakable.jpg','unzipped.jpg',
-  'vortex.jpg','winter.jpg','yoshi_1.jpg'
-];
-
-// Map filenames → category folder so hero can build the right path
-// Update this when you assign paintings to categories
-var imageCategory = {
-  'a_purrrfect_evening.jpg':            'the-fur-and-the-feathers',
-  'bear_with_a_view.jpg':               'the-fur-and-the-feathers',
-  'ozzie_with_a_tennis_ball.jpg':       'the-fur-and-the-feathers',
-  'pardon_the_intrusion.jpg':           'the-fur-and-the-feathers',
-  'the_welcome_committee.jpg':          'the-fur-and-the-feathers',
-  'yoshi_1.jpg':                        'the-fur-and-the-feathers',
-  'love_birds.jpg':                     'the-fur-and-the-feathers',
-  'ethan.jpg':                          'human-stories',
-  'mom.jpg':                            'human-stories',
-  'nick.jpg':                           'human-stories',
-  'mia.jpg':                            'human-stories',
-  'self_portrait.jpg':                  'human-stories',
-  'sibling_love.jpg':                   'human-stories',
-  'keep_me_safe.jpg':                   'human-stories',
-  'lake_mom.jpg':                       'human-stories',
-  'bring_them_home.jpg':                'shared-identities',
-  'gone_too_soon.jpg':                  'shared-identities',
-  'pride.jpg':                          'shared-identities',
-  'fear.jpg':                           'shared-identities',
-  'unbreakable.jpg':                    'shared-identities',
-  'bike.jpg':                           'on-the-move',
-  'journey_home.jpg':                   'on-the-move',
-  'the_guiding_light_of_the_trains.jpg':'on-the-move',
-  'meadow.jpg':                         'serene-spaces',
-  'lake.jpg':                           'serene-spaces',
-  'quietude.jpg':                       'serene-spaces',
-  'santa_cruz_beach.jpg':               'serene-spaces',
-  'riverside_glow.jpg':                 'serene-spaces',
-  'snow_fun.jpg':                       'serene-spaces',
-  'winter.jpg':                         'serene-spaces',
-  'the_golden_hour_at_the_lake.jpg':    'serene-spaces',
-  'sunflower.jpg':                      'bloom',
-  'tulips.jpg':                         'bloom',
-  'bloom.jpg':                          'bloom',
-  'splash_of_freedom.jpg':              'bloom',
-  'sunny_side_up.jpg':                  'bloom',
-  'sunshine.jpg':                       'bloom',
-  'vortex.jpg':                         'abstract',
-  'twilight.jpg':                       'abstract',
-  'monarch_dreamscape.jpg':             'abstract',
-  'unzipped.jpg':                       'abstract',
-  'rainbow_heart.jpg':                  'hearts',
-  'heart_to_heart.jpg':                 'hearts',
-  'full_heart.jpg':                     'hearts',
-  'one_way_home.jpg':                   'circles-of-light',
-  'see_you_in_paradise.jpg':            'circles-of-light',
-  'the_keeper_of_secrets.jpg':          'circles-of-light',
-  'beach_vibes_in_october.jpg':         'serene-spaces'
-};
-
-function heroSrc(filename) {
-  var cat = imageCategory[filename];
-  if (cat) return RAW_BASE + 'images/' + cat + '/' + filename;
-  return RAW_BASE + 'images/' + filename; // fallback
+// Hero video is self-hosted — no JS needed
+function prettyName(filename) {
+  return filename.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ')
+    .replace(/\b\w/g, function(c) { return c.toUpperCase(); });
 }
-
-(function initHero() {
-  var sc = document.getElementById('slideContainer');
-  var titleEl = document.getElementById('heroTitle');
-  // Shuffle
-  var imgs = heroImages.slice().sort(function() { return Math.random() - 0.5; });
-
-  // Only use horizontal images in hero
-  var filteredImgs = [];
-  var pending = imgs.length;
-  imgs.forEach(function(src) {
-    var probe = new Image();
-    probe.onload = function() {
-      if (probe.naturalWidth > probe.naturalHeight) filteredImgs.push(src);
-      pending--;
-      if (pending === 0) buildSlides();
-    };
-    probe.onerror = function() { pending--; if (pending === 0) buildSlides(); };
-    probe.src = heroSrc(src);
-  });
-
-  function buildSlides() {
-    if (filteredImgs.length === 0) filteredImgs = imgs.slice(0, 5); // fallback
-    filteredImgs.forEach(function(src, i) {
-      var d = document.createElement('div');
-      d.className = 'slide' + (i === 0 ? ' active' : '');
-      var img = document.createElement('img');
-      img.src = heroSrc(src);
-      img.alt = '';
-      img.loading = i < 3 ? 'eager' : 'lazy';
-      d.appendChild(img);
-      sc.appendChild(d);
-    });
-
-    var slides = sc.querySelectorAll('.slide');
-    var cur = 0;
-    if (titleEl) titleEl.textContent = prettyName(filteredImgs[0]);
-
-    function goTo(idx) {
-      slides[cur].classList.remove('active');
-      cur = (idx + slides.length) % slides.length;
-      slides[cur].classList.add('active');
-      if (titleEl) titleEl.textContent = prettyName(filteredImgs[cur]);
-    }
-    setInterval(function() { goTo(cur + 1); }, 3500);
-  }
-
-})();
 </script>
 
 <script src="shared.js"></script>
