@@ -48,13 +48,13 @@
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   max-width: 1400px;
   margin: 0 auto;
 }
 @media (max-width: 1000px) { .categories-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px)  { .categories-grid { grid-template-columns: 1fr; } }
+@media (max-width: 600px)  { .categories-grid { grid-template-columns: 1fr; } }
 
 /* 9 tiles — last one (if odd) spans full width on 3-col at certain breakpoints */
 .cat-tile {
@@ -349,20 +349,6 @@
         <span class="cat-tile-arrow">View Series →</span>
       </div>
     </a>
-
-    <a class="cat-tile reveal reveal-d1" href="categories/hearts.html"
-       style="--cat-color:#c04060;">
-      <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/hearts/rainbow_heart.jpg"
-           alt="Hearts" loading="lazy"
-           onerror="this.style.display='none'" style="object-position: center center;">
-      <div class="cat-tile-placeholder">❤️</div>
-      <div class="cat-tile-scrim"></div>
-      <div class="cat-tile-label">
-        <div class="cat-tile-name">Hearts</div>
-        <span class="cat-tile-arrow">View Series →</span>
-      </div>
-    </a>
-
     <a class="cat-tile reveal reveal-d2" href="categories/circles-of-light.html"
        style="--cat-color:#c08a20;">
       <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/circles-of-light/twilight.jpg"
@@ -516,37 +502,49 @@ function heroSrc(filename) {
 (function initHero() {
   var sc = document.getElementById('slideContainer');
   var titleEl = document.getElementById('heroTitle');
-  var cur = 0;
-
   // Shuffle
   var imgs = heroImages.slice().sort(function() { return Math.random() - 0.5; });
 
-  imgs.forEach(function(src, i) {
-    var d = document.createElement('div');
-    d.className = 'slide' + (i === 0 ? ' active' : '');
-    var img = document.createElement('img');
-    img.src = heroSrc(src);
-    img.alt = '';
-    img.loading = i < 3 ? 'eager' : 'lazy';
-    d.appendChild(img);
-    sc.appendChild(d);
+  // Only use horizontal images in hero
+  var filteredImgs = [];
+  var pending = imgs.length;
+  imgs.forEach(function(src) {
+    var probe = new Image();
+    probe.onload = function() {
+      if (probe.naturalWidth > probe.naturalHeight) filteredImgs.push(src);
+      pending--;
+      if (pending === 0) buildSlides();
+    };
+    probe.onerror = function() { pending--; if (pending === 0) buildSlides(); };
+    probe.src = heroSrc(src);
   });
 
-  var slides = sc.querySelectorAll('.slide');
+  function buildSlides() {
+    if (filteredImgs.length === 0) filteredImgs = imgs.slice(0, 5); // fallback
+    filteredImgs.forEach(function(src, i) {
+      var d = document.createElement('div');
+      d.className = 'slide' + (i === 0 ? ' active' : '');
+      var img = document.createElement('img');
+      img.src = heroSrc(src);
+      img.alt = '';
+      img.loading = i < 3 ? 'eager' : 'lazy';
+      d.appendChild(img);
+      sc.appendChild(d);
+    });
 
-  function prettyName(filename) {
-    return filename.replace(/\.[^.]+$/, '').replace(/_/g, ' ')
-      .replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-  }
-  if (titleEl) titleEl.textContent = prettyName(imgs[0]);
+    var slides = sc.querySelectorAll('.slide');
+    var cur = 0;
+    if (titleEl) titleEl.textContent = prettyName(filteredImgs[0]);
 
-  function goTo(idx) {
-    slides[cur].classList.remove('active');
-    cur = (idx + slides.length) % slides.length;
-    slides[cur].classList.add('active');
-    if (titleEl) titleEl.textContent = prettyName(imgs[cur]);
+    function goTo(idx) {
+      slides[cur].classList.remove('active');
+      cur = (idx + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      if (titleEl) titleEl.textContent = prettyName(filteredImgs[cur]);
+    }
+    setInterval(function() { goTo(cur + 1); }, 3500);
   }
-  setInterval(function() { goTo(cur + 1); }, 3500);
+
 })();
 </script>
 

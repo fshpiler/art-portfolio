@@ -145,19 +145,12 @@
 </footer>
 
 <script>
-// ── CATEGORY CONFIGURATION ──
-// Each page sets these two variables before this script runs.
-// bloom  = folder name in /images/ (e.g. "the-fur-and-the-feathers")
-// Bloom = display name (e.g. "The Fur & the Feathers")
-// (These are set inline in each generated HTML file below)
-
+var SLUG = 'bloom';
+var DISPLAY = 'Bloom';
 var GITHUB_USER = 'fshpiler';
 var GITHUB_REPO = 'art-portfolio';
 
-// Inject category title into page
 (function() {
-  var SLUG = 'bloom';
-  var DISPLAY = 'Bloom';
   var h = document.getElementById('catHeading');
   var b = document.getElementById('catBreadcrumb');
   var words = DISPLAY.split(' ');
@@ -167,11 +160,11 @@ var GITHUB_REPO = 'art-portfolio';
   document.title = DISPLAY + ' | Faina Shpiler';
 })();
 
-// ── DYNAMIC GALLERY via GitHub Contents API ──
 (function loadGallery() {
   var apiUrl = 'https://api.github.com/repos/' + GITHUB_USER + '/' + GITHUB_REPO
              + '/contents/images/' + SLUG;
-  var rawBase = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO + '/main/images/' + SLUG + '/';
+  var rawBase = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO
+              + '/main/images/' + SLUG + '/';
 
   var loadingEl = document.getElementById('galleryLoading');
   var emptyEl   = document.getElementById('galleryEmpty');
@@ -180,15 +173,14 @@ var GITHUB_REPO = 'art-portfolio';
 
   fetch(apiUrl)
     .then(function(r) {
-      if (!r.ok) throw new Error('API error ' + r.status);
+      if (!r.ok) throw new Error('GitHub API returned ' + r.status + ' for ' + apiUrl);
       return r.json();
     })
     .then(function(files) {
-      // Filter to image files only
       var images = files.filter(function(f) {
         return /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name);
       }).sort(function(a, b) {
-        return b.name.localeCompare(a.name);  // newest-named files first
+        return b.name.localeCompare(a.name);
       });
 
       if (loadingEl) loadingEl.style.display = 'none';
@@ -201,44 +193,49 @@ var GITHUB_REPO = 'art-portfolio';
 
       if (countEl) countEl.textContent = images.length + ' painting' + (images.length !== 1 ? 's' : '');
 
-      // Build masonry columns
-      masonryEl.style.display = 'flex';
+      var srcs = images.map(function(f) { return rawBase + f.name; });
+      window._lbImages = srcs;
+
       var w = document.documentElement.clientWidth || window.innerWidth;
       var numCols = w < 560 ? 1 : w < 900 ? 2 : 3;
+      masonryEl.style.display = 'flex';
+
       var cols = [];
+      var colHeights = [];
       for (var c = 0; c < numCols; c++) {
         var col = document.createElement('div');
         col.className = 'masonry-col';
         masonryEl.appendChild(col);
         cols.push(col);
+        colHeights.push(0);
       }
-
-      // Store srcs for lightbox
-      var srcs = images.map(function(f) { return rawBase + f.name; });
-      window._lbImages = srcs;
 
       images.forEach(function(file, i) {
         var item = document.createElement('div');
         item.className = 'masonry-item';
-
         var img = document.createElement('img');
         img.alt = prettyName(file.name);
         img.loading = i < 6 ? 'eager' : 'lazy';
-        img.src = rawBase + file.name;
 
-        var ov = document.createElement('div');
-        ov.className = 'item-overlay';
+        img.addEventListener('load', function() {
+          var ratio = img.naturalHeight / (img.naturalWidth || 1);
+          var shortestCol = 0;
+          for (var c = 1; c < numCols; c++) {
+            if (colHeights[c] < colHeights[shortestCol]) shortestCol = c;
+          }
+          cols[shortestCol].appendChild(item);
+          colHeights[shortestCol] += ratio;
+        });
 
         item.appendChild(img);
+        var ov = document.createElement('div');
+        ov.className = 'item-overlay';
         item.appendChild(ov);
 
         (function(idx) {
           item.addEventListener('click', function() { window.openLightbox(idx); });
         })(i);
 
-        cols[i % numCols].appendChild(item);
-
-        // Re-attach cursor events
         item.addEventListener('mouseenter', function() {
           var cr = document.getElementById('cursor');
           var ri = document.getElementById('cursorRing');
@@ -251,17 +248,17 @@ var GITHUB_REPO = 'art-portfolio';
           if (cr) { cr.style.width = '8px'; cr.style.height = '8px'; }
           if (ri) { ri.style.width = '36px'; ri.style.height = '36px'; ri.style.borderColor = '#8b2fc9'; }
         });
+
+        img.src = rawBase + file.name;
       });
     })
     .catch(function(err) {
-      // API failed (rate-limited or folder missing) — show empty state
       if (loadingEl) loadingEl.style.display = 'none';
       if (emptyEl) {
-        emptyEl.innerHTML = 'Unable to load paintings right now.<br><small>If you are seeing this on the live site, check that images are in <code>images/' + bloom + '/</code> on GitHub.</small>';
+        emptyEl.innerHTML = 'Unable to load paintings.<br><small>' + err.message + '</small>';
         emptyEl.style.display = 'block';
       }
-      if (countEl) countEl.textContent = '';
-      console.error('Gallery load error:', err);
+      console.error('Gallery error:', err);
     });
 })();
 
@@ -269,6 +266,7 @@ function prettyName(filename) {
   return filename.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ')
     .replace(/\b\w/g, function(c) { return c.toUpperCase(); });
 }
+
 </script>
 
 <script src="../shared.js"></script>
