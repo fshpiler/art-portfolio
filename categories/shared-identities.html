@@ -139,61 +139,50 @@
 
 <script>
 var SLUG = 'shared-identities';
-var DISPLAY = 'Shared Identities';
 var GITHUB_USER = 'fshpiler';
 var GITHUB_REPO = 'art-portfolio';
 
-(function() {
-  var h = document.getElementById('catHeading');
-  var b = document.getElementById('catBreadcrumb');
-  var words = DISPLAY.split(' ');
-  var last = words.pop();
-  if (h) h.innerHTML = words.join(' ') + (words.length ? ' ' : '') + '<span>' + last + '</span>';
-  if (b) b.textContent = DISPLAY;
-  document.title = DISPLAY + ' | Faina Shpiler';
-})();
-
 (function loadGallery() {
-  var apiUrl = 'https://api.github.com/repos/' + GITHUB_USER + '/' + GITHUB_REPO
-             + '/contents/images/' + SLUG + '?per_page=100';
+  var treeUrl = 'https://api.github.com/repos/' + GITHUB_USER + '/' + GITHUB_REPO
+              + '/git/trees/main?recursive=1';
   var rawBase = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO
               + '/main/images/' + SLUG + '/';
+  var prefix  = 'images/' + SLUG + '/';
 
   var loadingEl = document.getElementById('galleryLoading');
   var emptyEl   = document.getElementById('galleryEmpty');
   var masonryEl = document.getElementById('masonry');
 
-  fetch(apiUrl)
+  fetch(treeUrl)
     .then(function(r) {
-      if (!r.ok) throw new Error('GitHub API returned ' + r.status + ' for ' + apiUrl);
+      if (!r.ok) throw new Error('GitHub Trees API returned ' + r.status);
       return r.json();
     })
-    .then(function(files) {
-      var images = files.filter(function(f) {
-        return /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name);
+    .then(function(data) {
+      var images = (data.tree || []).filter(function(item) {
+        return item.type === 'blob'
+          && item.path.indexOf(prefix) === 0
+          && /\.(jpg|jpeg|png|gif|webp)$/i.test(item.path);
+      }).map(function(item) {
+        return item.path.replace(prefix, '');
       }).sort(function(a, b) {
-        return b.name.localeCompare(a.name);
+        return b.localeCompare(a);
       });
 
       if (loadingEl) loadingEl.style.display = 'none';
 
       if (images.length === 0) {
         if (emptyEl) emptyEl.style.display = 'block';
-        
         return;
       }
 
-      
-
-      var srcs = images.map(function(f) { return rawBase + f.name; });
-      window._lbImages = srcs;
+      window._lbImages = images.map(function(name) { return rawBase + name; });
 
       var w = document.documentElement.clientWidth || window.innerWidth;
       var numCols = w < 560 ? 1 : w < 900 ? 2 : 3;
       masonryEl.style.display = 'flex';
 
-      var cols = [];
-      var colHeights = [];
+      var cols = [], colHeights = [];
       for (var c = 0; c < numCols; c++) {
         var col = document.createElement('div');
         col.className = 'masonry-col';
@@ -202,23 +191,19 @@ var GITHUB_REPO = 'art-portfolio';
         colHeights.push(0);
       }
 
-      images.forEach(function(file, i) {
+      images.forEach(function(name, i) {
         var item = document.createElement('div');
         item.className = 'masonry-item';
-
         var img = document.createElement('img');
-        img.alt = prettyName(file.name);
+        img.alt = name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
         img.loading = i < 6 ? 'eager' : 'lazy';
-
         var ov = document.createElement('div');
         ov.className = 'item-overlay';
-
         item.appendChild(img);
         item.appendChild(ov);
 
-        (function(idx, el, imgEl) {
-          // Set src BEFORE attaching onload to avoid missing cached-image events
-          imgEl.src = rawBase + file.name;
+        (function(idx, el, imgEl, imgName) {
+          imgEl.src = rawBase + imgName;
 
           function placeItem() {
             var ratio = imgEl.naturalHeight / (imgEl.naturalWidth || 1);
@@ -231,18 +216,13 @@ var GITHUB_REPO = 'art-portfolio';
           }
 
           if (imgEl.complete && imgEl.naturalWidth > 0) {
-            // Already cached — place immediately
             placeItem();
           } else {
-            imgEl.onload = placeItem;
-            imgEl.onerror = function() {
-              // Still place the item so broken images don't block the grid
-              placeItem();
-            };
+            imgEl.onload  = placeItem;
+            imgEl.onerror = placeItem;
           }
-
           el.addEventListener('click', function() { window.openLightbox(idx); });
-        })(i, item, img);
+        })(i, item, img, name);
 
         item.addEventListener('mouseenter', function() {
           var cr = document.getElementById('cursor');
@@ -267,12 +247,6 @@ var GITHUB_REPO = 'art-portfolio';
       console.error('Gallery error:', err);
     });
 })();
-
-function prettyName(filename) {
-  return filename.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ')
-    .replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-}
-
 </script>
 
 <script src="../shared.js"></script>
