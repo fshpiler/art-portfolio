@@ -19,35 +19,19 @@
 #heroVideo {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
-  object-fit: cover; object-position: center;
+  object-fit: cover; object-position: center top;
   display: block;
 }
 .hero-overlay {
   position: absolute; inset: 0; z-index: 2;
   background: linear-gradient(to bottom, transparent 50%, rgba(26,18,24,0.35) 100%);
 }
-.hero-caption {
-  position: absolute; bottom: 52px; left: 48px; z-index: 3;
-  color: white;
-}
-.hero-caption-eyebrow {
-  font-size: 10px; font-weight: 500; letter-spacing: 0.22em;
-  text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 8px;
-}
-.hero-caption-title {
-  font-size: clamp(14px, 1.8vw, 22px); font-weight: 300; line-height: 1.3;
-  letter-spacing: 0.02em;
-}
-@media (max-width: 800px) {
-  .hero-caption { left: 24px; bottom: 36px; }
-}
-
 /* ── CATEGORIES SECTION ── */
 .categories-section {
-  padding: 80px 48px 100px;
+  padding: 48px 48px 100px;
   background: var(--bg);
 }
-@media (max-width: 800px) { .categories-section { padding: 60px 20px 80px; } }
+@media (max-width: 800px) { .categories-section { padding: 32px 20px 80px; } }
 
 .categories-grid {
   display: grid;
@@ -253,15 +237,10 @@
     <source src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/fainahero.mp4" type="video/mp4">
   </video>
   <div class="hero-overlay"></div>
-  <div class="hero-caption">
-    <div class="hero-caption-eyebrow">The Rainbow Canvas</div>
-    <div class="hero-caption-title">Faina Shpiler</div>
-  </div>
 </section>
 
 <!-- CATEGORIES -->
 <section class="categories-section" id="portfolio">
-  <div class="section-label reveal">Portfolio</div>
   <div class="categories-grid" id="catGrid">
 
     <a class="cat-tile reveal" href="categories/the-fur-and-the-feathers.html"
@@ -346,24 +325,11 @@
        style="--cat-color:#7b4aaa;">
       <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/abstract/undoing.jpg"
            alt="Abstract" loading="lazy"
-           onerror="this.style.display='none'" style="object-position: center center; transform: scale(1.18); transform-origin: center center;">
+           onerror="this.style.display='none'" style="object-position: center center; transform: scale(1.45); transform-origin: center center;">
       <div class="cat-tile-placeholder">🎨</div>
       <div class="cat-tile-scrim"></div>
       <div class="cat-tile-label">
         <div class="cat-tile-name">Abstract</div>
-        <span class="cat-tile-arrow">View Series →</span>
-      </div>
-    </a>
-
-    <a class="cat-tile reveal reveal-d1" href="categories/hearts.html"
-       style="--cat-color:#c03060;">
-      <img src="https://raw.githubusercontent.com/fshpiler/art-portfolio/main/images/hearts/rainbow_heart.jpg"
-           alt="Hearts" loading="lazy"
-           onerror="this.style.display='none'" style="object-position: center center;">
-      <div class="cat-tile-placeholder">❤️</div>
-      <div class="cat-tile-scrim"></div>
-      <div class="cat-tile-label">
-        <div class="cat-tile-name">Hearts</div>
         <span class="cat-tile-arrow">View Series →</span>
       </div>
     </a>
