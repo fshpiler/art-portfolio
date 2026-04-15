@@ -143,31 +143,37 @@ var GITHUB_USER = 'fshpiler';
 var GITHUB_REPO = 'art-portfolio';
 
 (function loadGallery() {
-  var treeUrl = 'https://api.github.com/repos/' + GITHUB_USER + '/' + GITHUB_REPO
-              + '/git/trees/main?recursive=1';
   var rawBase = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO
               + '/main/images/' + SLUG + '/';
-  var prefix  = 'images/' + SLUG + '/';
-
   var loadingEl = document.getElementById('galleryLoading');
   var emptyEl   = document.getElementById('galleryEmpty');
   var masonryEl = document.getElementById('masonry');
 
-  fetch(treeUrl)
-    .then(function(r) {
-      if (!r.ok) throw new Error('GitHub Trees API returned ' + r.status);
-      return r.json();
-    })
-    .then(function(data) {
-      var images = (data.tree || []).filter(function(item) {
-        return item.type === 'blob'
-          && item.path.indexOf(prefix) === 0
-          && /\.(jpg|jpeg|png|gif|webp)$/i.test(item.path);
-      }).map(function(item) {
-        return item.path.replace(prefix, '');
-      }).sort(function(a, b) {
-        return b.localeCompare(a);
+  // Fetch ALL pages from the Contents API until no more results
+  function fetchAllPages(page, accumulated) {
+    var url = 'https://api.github.com/repos/' + GITHUB_USER + '/' + GITHUB_REPO
+            + '/contents/images/' + SLUG + '?per_page=100&page=' + page;
+    return fetch(url)
+      .then(function(r) {
+        if (!r.ok) throw new Error('GitHub API error ' + r.status);
+        return r.json();
+      })
+      .then(function(files) {
+        var imgs = files.filter(function(f) {
+          return /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name);
+        });
+        var combined = accumulated.concat(imgs);
+        // If we got a full page of 100, there might be more
+        if (files.length === 100) {
+          return fetchAllPages(page + 1, combined);
+        }
+        return combined;
       });
+  }
+
+  fetchAllPages(1, [])
+    .then(function(images) {
+      images.sort(function(a, b) { return b.name.localeCompare(a.name); });
 
       if (loadingEl) loadingEl.style.display = 'none';
 
@@ -176,7 +182,7 @@ var GITHUB_REPO = 'art-portfolio';
         return;
       }
 
-      window._lbImages = images.map(function(name) { return rawBase + name; });
+      window._lbImages = images.map(function(f) { return rawBase + f.name; });
 
       var w = document.documentElement.clientWidth || window.innerWidth;
       var numCols = w < 560 ? 1 : w < 900 ? 2 : 3;
@@ -191,19 +197,19 @@ var GITHUB_REPO = 'art-portfolio';
         colHeights.push(0);
       }
 
-      images.forEach(function(name, i) {
+      images.forEach(function(file, i) {
         var item = document.createElement('div');
         item.className = 'masonry-item';
         var img = document.createElement('img');
-        img.alt = name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+        img.alt = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
         img.loading = i < 6 ? 'eager' : 'lazy';
         var ov = document.createElement('div');
         ov.className = 'item-overlay';
         item.appendChild(img);
         item.appendChild(ov);
 
-        (function(idx, el, imgEl, imgName) {
-          imgEl.src = rawBase + imgName;
+        (function(idx, el, imgEl, fname) {
+          imgEl.src = rawBase + fname;
 
           function placeItem() {
             var ratio = imgEl.naturalHeight / (imgEl.naturalWidth || 1);
@@ -222,7 +228,7 @@ var GITHUB_REPO = 'art-portfolio';
             imgEl.onerror = placeItem;
           }
           el.addEventListener('click', function() { window.openLightbox(idx); });
-        })(i, item, img, name);
+        })(i, item, img, file.name);
 
         item.addEventListener('mouseenter', function() {
           var cr = document.getElementById('cursor');
