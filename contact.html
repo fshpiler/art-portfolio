@@ -82,6 +82,8 @@
   padding-right: 24px;
 }
 .form-row .field:last-child { padding-left: 24px; }
+@media (max-width: 600px) { .form-row .field:last-child { padding-left: 0; } }
+@media (max-width: 600px) { .form-row .field:first-child { border-right: none; padding-right: 0; } }
 
 .field label {
   display: block; font-size: 10px; letter-spacing: 0.2em;

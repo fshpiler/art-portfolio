@@ -15,12 +15,23 @@
 #hero {
   position: relative; height: 78vh; overflow: hidden;
 }
-@media (max-width: 800px) { #hero { height: 65vh; } }
+@media (max-width: 800px) {
+  #hero {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+}
 #heroVideo {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover; object-position: 50% 20%;
   display: block;
+}
+@media (max-width: 800px) {
+  #heroVideo {
+    object-fit: cover;
+    object-position: center center;
+  }
 }
 .hero-overlay {
   position: absolute; inset: 0; z-index: 2;
