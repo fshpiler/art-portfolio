@@ -35,21 +35,17 @@
 /* FORM — single column, left-aligned */
 .connect-form { display: flex; flex-direction: column; max-width: 680px; }
 
-/* Intro text + text links above form */
+/* Intro text */
 .form-intro {
   font-size: 15px; line-height: 1.85; color: #3d333a;
-  font-weight: 300; margin-bottom: 10px;
+  font-weight: 300; margin-bottom: 36px;
 }
-.form-social-links {
-  display: flex; gap: 28px; align-items: center; margin-bottom: 36px; flex-wrap: nowrap;
+.form-intro a {
+  color: #3d333a; text-decoration: none;
+  border-bottom: 1px solid rgba(26,18,24,0.25);
+  transition: color 0.3s, border-color 0.3s;
 }
-.form-social-links a {
-  font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--muted); text-decoration: none; white-space: nowrap;
-  transition: color 0.3s; padding-bottom: 2px;
-  border-bottom: 1px solid rgba(26,18,24,0.15);
-}
-.form-social-links a:hover { color: var(--accent2); border-color: var(--accent2); }
+.form-intro a:hover { color: var(--accent2); border-color: var(--accent2); }
 
 /* Topic buttons */
 .topic-label {
@@ -58,7 +54,7 @@
   white-space: nowrap;
 }
 .topic-buttons {
-  display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 0;
+  display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px;
 }
 .topic-btn {
   font-family: var(--sans); font-size: 12px; font-weight: 400;
@@ -149,24 +145,17 @@
 <div class="contact-wrap">
   <form class="connect-form reveal" id="contactForm">
 
-    <p class="form-intro">Whether you're drawn to an existing piece, interested in a commission, exploring a collaboration, or just want to say hello — I'd love to hear from you. Reach out via Instagram, email, LinkedIn, or send a message here.</p>
-
-    <div class="form-social-links">
-      <a href="https://www.instagram.com/the_rainbow_canvas/" target="_blank">Instagram</a>
-      <a href="#" data-email>Email</a>
-      <a href="https://www.linkedin.com/in/faina" target="_blank">LinkedIn</a>
-    </div>
+    <p class="form-intro">Whether you're drawn to an existing piece, interested in a commission, exploring a collaboration, or just want to say hello — I'd love to hear from you. Reach out via <a href="https://www.instagram.com/the_rainbow_canvas/" target="_blank">Instagram</a>, <a href="#" data-email>email</a>, <a href="https://www.linkedin.com/in/faina" target="_blank">LinkedIn</a>, or send a message here.</p>
 
     <div class="topic-label">I am interested in</div>
     <div class="topic-buttons">
       <button type="button" class="topic-btn" data-topic="Commission a painting">Commission a painting</button>
       <button type="button" class="topic-btn" data-topic="Purchase existing work">Purchase existing work</button>
       <button type="button" class="topic-btn" data-topic="Exhibition / collaboration">Exhibition / collaboration</button>
-      <button type="button" class="topic-btn" data-topic="Just saying hello">Just saying hello</button>
     </div>
     <input type="hidden" id="fsubject" value="">
 
-    <div class="form-row" style="margin-top: 28px;">
+    <div class="form-row">
       <div class="field">
         <label for="fname">Name</label>
         <input type="text" id="fname" placeholder="Jane Smith" required>
